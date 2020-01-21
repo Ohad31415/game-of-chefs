@@ -7,6 +7,7 @@ import bs4
 
 
 BASE = 'https://www.bbcgoodfood.com/search'
+prefix = 'https://www.bbcgoodfood.com'
 headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36'}
 
 
@@ -50,7 +51,7 @@ def search_results(query, pages=None, wait=5, jitter=True):
         soup = bs4.BeautifulSoup(res.text, features='lxml')
         urls.extend([a['href'] for a in soup.select('#search-results article > h3 > a')])
 
-    return urls
+    return [prefix + url for url in urls]
 
 
 # print(search_results(query='mushroom soup', wait=2))

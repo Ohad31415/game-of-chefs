@@ -17,21 +17,19 @@ def parse_args():
     category_option = category_opts.get(args.category)
 
     if category_option and args.key_word:
-        print('Only one argument can be given')
-        return None
+        raise ValueError('Only one argument can be given')
 
     if not (category_option and args.key_word):
-        print('Please enter a search argument')
-        return None
+        raise ValueError('Please enter a search argument')
 
     return category_option, args.key_word
 
 
 def main():
     # gets user's arguments (if exist)
-    category_selection, key_word_selection = parse_args()
-
     try:
+        category_selection, key_word_selection = parse_args()
+
         # if a key_word was give, search for all corresponding recipes
         if key_word_selection:
             recipe_urls = search_results(query=key_word_selection)
@@ -41,6 +39,9 @@ def main():
         for url in recipie_urls:
             recipe_content = scrape_recipe_bbcgoodfood(url)
             #todo enter to database
+
+    except ValueError as err:
+        print(err)
 
     except requests.exceptions.ConnectionError as err:
         print("Connection error: {}".format(err))

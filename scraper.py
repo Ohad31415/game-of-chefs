@@ -9,8 +9,6 @@ import random
 import requests
 import re
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import time
 import json
 import os
@@ -80,7 +78,6 @@ def get_sub_categories(category_url):
         sub_categories[category.text] = prefix + temp_url
     return sub_categories
 
-
     # categories = categories.select("a")
     # for category in categories:
     #     temp_url = category["href"]
@@ -123,25 +120,37 @@ def get_recipes(sub_category_url):
         print("Something wrong")
 
 
-
-
-
-
-
-def main():
+def get_all_recipe(category):
     all_categories = get_categories(URL)
-    category = np.random.choice(list(all_categories.keys()), 1)  # pick randomly category
-    chosen_category = all_categories[category[0]]
+    # print(list(all_categories.keys()))
+    # category = np.random.choice(list(all_categories.keys()), 1)  # pick randomly category
+    # chosen_category = all_categories[category[0]]
+    # category = np.random.choice(list(all_categories.keys()), 1)  # pick randomly category
+    # print(chosen_category, category)
 
+    chosen_category = all_categories[category]
     sub_categories = get_sub_categories(chosen_category)
-    sub_category = np.random.choice(list(sub_categories.keys()), 1)  # pick randomly sub_category
-    chosen_category = sub_categories[sub_category[0]]
+    # print(list(sub_categories.keys()))
 
-    recipes = get_recipes(chosen_category)
-    print(recipes)
+    # sub_category = np.random.choice(list(sub_categories.keys()), 1)  # pick randomly sub_category
+    # chosen_category = sub_categories[sub_category[0]]
+    # print(chosen_category, sub_category)
+
+    recipes = []
+
+    try:
+        for cat in sub_categories.values():
+            recipes += [link for link in get_recipes(cat).values()]
+    except:
+        print(cat)
+
+    return recipes
+        # print(recipes)
 
     # data_dict = False
     # while not data_dict:
 
-if __name__ == '__main__':
-    main()
+
+# if __name__ == '__main__':
+# r = get_all_recipe('Cakes & baking')
+# print(len(r))

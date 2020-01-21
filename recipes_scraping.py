@@ -52,13 +52,13 @@ def scrape_recipe_bbcgoodfood(url_in):
     return {'attributes': recipe_attributes, 'ingredients': recipe_ingredients, 'method': recipe_method}
 
 
-def main():
-    url = 'https://www.bbcgoodfood.com/recipes/tomato-soup'
-    recipe_content = scrape_recipe_bbcgoodfood(url)
-    print(recipe_content['attributes'])
-    print(recipe_content['ingredients'])
-    print(recipe_content['method'])
-
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     url = 'https://www.bbcgoodfood.com/recipes/tomato-soup'
+#     recipe_content = scrape_recipe_bbcgoodfood(url)
+#     print(recipe_content['attributes'])
+#     print(recipe_content['ingredients'])
+#     print(recipe_content['method'])
+#
+#
+# if __name__ == '__main__':
+#     main()
