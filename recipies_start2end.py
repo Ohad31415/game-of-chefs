@@ -6,7 +6,10 @@ import requests
 
 
 def parse_args():
-    """the function gets user's argument of whether to search according to specific Key word or Category"""
+    """
+    The function gets user's argument of whether to search according to specific Query or Category
+    :returns selected category argument (category_option) or selected search query (args.query)
+    """
     category_opts = {'c_b': 'Cakes & baking', 'cu': 'Cuisines', 'ev': 'Events', 'hl': 'Healthy', 'ing': 'Ingredients',
                      'oc': 'Occasions', 'q_e': 'Quick & easy', 'die': 'Special diets', 'veg': 'Vegetarian'}
     category_help = 'chose recipe category:' + str(category_opts)
@@ -27,16 +30,22 @@ def parse_args():
 
 
 def main():
-    # gets user's arguments (if exist)
+    """
+    The function sparse for recipes in GoodFood according to search query or category
+    The recipes includes rating, Cuisine, Ingredients, Methods and additional parameters
+    The information is stored in a DataBase
+    """
     try:
+        # receive query or category for web scraping
         category_selection, query_selection = parse_args()
 
-        # if a key_word was give, search for all corresponding recipes
+        # if a query was give, search for all corresponding recipe urls
         if query_selection:
             recipe_urls = search_results(query=query_selection)
+        # if a category was give, search for all corresponding recipe urls
         elif category_selection:
             recipe_urls = get_all_recipe(category_selection)
-
+        # go over all recipe urls and retrieve information into a DB
         for url in recipe_urls:
             recipe_content = scrape_recipe_bbcgoodfood(url)
             # todo enter to database
